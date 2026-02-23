@@ -1,0 +1,88 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Dialogue",
+    "scopeName": "source.dialogue",
+    "fileTypes": ["mol"],
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#blocks" }
+    ],
+    "repository": {
+        "comments": {
+            "name": "comment.line.double-slash",
+            "match": "//.*$"
+        },
+        "blocks": {
+            "name": "meta.block.dialogue",
+            "begin": "^O[\\w_]+",
+            "end": "^(?=O[\\w_]+|\\s*$)",
+            "beginCaptures": {
+                "0": { "name": "entity.name.type.dialogue" }
+            },
+            "patterns": [
+                { "include": "#anchors" },
+                { "include": "#control" },
+                { "include": "#commands" },
+                { "include": "#text" },
+                { "include": "#options" },
+                { "include": "#variables" },
+                { "include": "#comments" }
+            ]
+        },
+        "anchors": {
+            "match": "^A[\\w_]+",
+            "name": "entity.name.tag.dialogue"
+        },
+        "control": {
+            "patterns": [
+                {
+                    "match": "^\\?IF|^\\?ELSIF|^\\?ELSE|^\\?ENDIF|^\\?END",
+                    "name": "keyword.control.dialogue"
+                },
+                {
+                    "match": "==|<>|!=|>=|<=|>|<",
+                    "name": "keyword.operator.comparison"
+                }
+            ]
+        },
+        "commands": {
+            "patterns": [
+                {
+                    "match": "^[SNCBMEF]\\b",
+                    "name": "support.function.dialogue"
+                },
+                {
+                    "match": "^G\\b",
+                    "name": "keyword.control.dialogue"
+                }
+            ]
+        },
+        "text": {
+            "begin": "^T\\s+",
+            "end": "$",
+            "name": "string.unquoted.dialogue",
+            "patterns": [
+                {
+                    "match": "\\\\n|<\\/?[a-z]+:[^>]+>",
+                    "name": "constant.character.escape"
+                }
+            ]
+        },
+        "options": {
+            "patterns": [
+                {
+                    "match": "^>",
+                    "name": "keyword.control.option"
+                },
+                {
+                    "match": "#[\\w_]+",
+                    "name": "entity.name.tag.option-target"
+                }
+            ]
+        },
+        "variables": {
+            "match": "[\\$#][\\w_]+",
+            "name": "variable.other.dialogue"
+        }
+    }
+}

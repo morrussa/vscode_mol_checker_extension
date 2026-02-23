@@ -1,0 +1,65 @@
+{
+    "name": "dialogue-language",
+    "displayName": "Dialogue Language",
+    "description": "Dialogue language support for .mol files",
+    "version": "0.0.1",
+    "publisher": "your-name",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "onLanguage:dialogue"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "languages": [{
+            "id": "dialogue",
+            "aliases": ["Dialogue", "dialogue"],
+            "extensions": [".mol",".mol_sub"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "dialogue",
+            "scopeName": "source.dialogue",
+            "path": "./syntaxes/dialogue.tmLanguage.json"
+        }],
+        "menus": {
+            "editor/context": [{
+                "when": "resourceLangId == dialogue",
+                "command": "dialogue.runChecker",
+                "group": "navigation"
+            }]
+        },
+        "commands": [
+            {
+                "command": "dialogue.runChecker",
+                "title": "运行对话检查器"
+            },
+            {
+                "command": "dialogue.formatIndent",
+                "title": "为 O 块添加缩进"
+            },
+            {
+                "command": "dialogue.cleanIndent",
+                "title": "去除所有缩进（用于解析）"
+            }
+        ],
+        "keybindings": [{
+            "command": "dialogue.runChecker",
+            "key": "ctrl+shift+d",
+            "when": "editorTextFocus && editorLangId == dialogue"
+        }]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "echo \"No compilation needed\"",
+        "watch": "echo \"No watch needed\"",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "vscode": "^1.1.37"
+    }
+}
